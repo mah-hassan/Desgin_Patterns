@@ -13,6 +13,14 @@ public class PaymentService {
         if (this.subscribe.isNutritionalCare()) this.NutritionalCareCost = NutritionalCareCost;
 
     }
+    public void applyPayment() {
+        Method.collectPaymentDetails();
+        if (Method.validatePaymentDetails()) {
+            Method.pay(getTotal());
+            subscribe.ToString();
+        }else System.out.println("Verify payment information");
+    }
+
     public PaymentService(){
         this.cost = 0;
         this.NutritionalCareCost = 0;
@@ -23,23 +31,15 @@ public class PaymentService {
     }
 
     public void setMethod(PaymentMethod method) {
-        Method = method;
+        this.Method = method;
     }
 
-    public void setSubscribe(Subscription subscribe) {
-        this.subscribe = subscribe;
-    }
-
-    public void applyPayment() {
-        Method.collectPaymentDetails();
-        if (Method.validatePaymentDetails()) {
-            Method.pay(getTotal());
-            subscribe.ToString();
-        }else System.out.println("Verify payment information");
-    }
 
     private int getTotal() {
         return subscribe.isNutritionalCare() ? cost*subscribe.getNomOfMonths() + NutritionalCareCost* subscribe.getNomOfMonths() : cost* subscribe.getNomOfMonths();
+    }
+    public void setSubscribe(Subscription subscribe) {
+        this.subscribe = subscribe;
     }
 
 }
